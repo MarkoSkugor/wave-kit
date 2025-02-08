@@ -1,52 +1,27 @@
-import { fn } from '@storybook/test';
-
-import type { Meta, StoryObj } from '@storybook/web-components';
-
+import { html } from 'lit-html';
+import { Meta, StoryFn } from '@storybook/web-components';
 import type { ButtonProps } from './Button';
-import { Button } from './Button';
+import './Button';
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories
-const meta = {
+export default {
   title: 'Example/Button',
   tags: ['autodocs'],
-  render: (args) => Button(args),
+  component: 'wk-button',
   argTypes: {
-    backgroundColor: { control: 'color' },
-    size: {
-      control: { type: 'select' },
-      options: ['small', 'medium', 'large'],
-    },
+    disabled: { control: 'boolean' },
   },
-  args: { onClick: fn() },
-} satisfies Meta<ButtonProps>;
+} as Meta<ButtonProps>;
 
-export default meta;
-type Story = StoryObj<ButtonProps>;
+const Template: StoryFn = ({ disabled }) => html`
+  <div><wk-button ?disabled=${disabled}>Click Me</wk-button></div>
+`;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Primary: Story = {
-  args: {
-    primary: true,
-    label: 'Button',
-  },
+export const Default = Template.bind({});
+Default.args = {
+  disabled: false,
 };
 
-export const Secondary: Story = {
-  args: {
-    label: 'Button',
-  },
-};
-
-export const Large: Story = {
-  args: {
-    size: 'large',
-    label: 'Button',
-  },
-};
-
-export const Small: Story = {
-  args: {
-    size: 'small',
-    label: 'Button',
-  },
+export const Disabled = Template.bind({});
+Disabled.args = {
+  disabled: true,
 };
